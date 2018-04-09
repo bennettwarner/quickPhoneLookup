@@ -14,9 +14,11 @@ caller_name = (r['caller_name'])['caller_name']
 caller_type = (r['caller_name'])['caller_type']
 phone_number = (r['national_format'])
 
-#pprint.pprint(json.loads(r.text))
 print ()
-print (' Caller Name:  ' + caller_name)
-print ('   Call Type:  ' + caller_type)
-print ('Phone Number:  ' + phone_number)
+try:
+    print (' Caller Name:  ' + caller_name)
+    print ('   Call Type:  ' + caller_type)
+    print ('Phone Number:  ' + phone_number)
+except TypeError:
+    print ('Phone number not found!')
 print ()
