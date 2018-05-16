@@ -7,12 +7,27 @@ import json
 account_sid = "ENTER ACCOUNT ID HERE"
 auth_token = "ENTER AUTH TOKEN HERE"
 
-r = requests.get('https://lookups.twilio.com/v1/PhoneNumbers/' + sys.argv[1] + '?Type=caller-name', auth=(account_sid, auth_token))
-r = json.loads(r.text)
+try:
+    query = sys.argv[1]
+except IndexError:
+    print('\nError: no argument provided')
+    print('Usage: lookup.py 123-456-7890\n')
+    exit(1)
 
-caller_name = (r['caller_name'])['caller_name']
-caller_type = (r['caller_name'])['caller_type']
-phone_number = (r['national_format'])
+try:
+    r = requests.get('https://lookups.twilio.com/v1/PhoneNumbers/' + query + '?Type=caller-name', auth=(account_sid, auth_token))
+    r = json.loads(r.text)
+except:
+    print('\nError: unable to access twilio api endpoint\n')
+    exit(1)
+
+try:
+    caller_name = (r['caller_name'])['caller_name']
+    caller_type = (r['caller_name'])['caller_type']
+    phone_number = (r['national_format'])
+except:
+    print('\nError: invalid API response\nensure that account id and auth token is set\n')
+    exit(1)
 
 print ()
 try:
